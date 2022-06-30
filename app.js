@@ -22,14 +22,18 @@ const postSchema={
   title:String,
   content:String
 };
+const Post=mongoose.model("Post",postSchema);
 
-let posts = [];
+
 
 app.get("/", function(req, res){
-  res.render("home", {
-    startingContent: homeStartingContent,
-    posts: posts
-    });
+  Post.find({},function(err,posts)
+  {
+    res.render("home",{
+      startingContent:homeStartingContent,
+      posts:posts,
+    })
+  })
 });
 
 app.get("/about", function(req, res){
@@ -45,19 +49,28 @@ app.get("/compose", function(req, res){
 });
 
 app.post("/compose", function(req, res){
-  const post = {
+  const post = new Post({
     title: req.body.postTitle,
     content: req.body.postBody
-  };
+  });
+  post.save(function(err)
+  {
+    if(err)
+    {
+      console.log(err);
+    }
+    else
+    {
+      res.redirect("/");
+    }
+  });
 
-  posts.push(post);
-
-  res.redirect("/");
 
 });
 
-app.get("/posts/:postName", function(req, res){
-  const requestedTitle = _.lowerCase(req.params.postName);
+app.get("/posts/:postId", function(req, res){
+  const requestedId = req.params.postId;
+  Post.findOne({_id:requestedId},function)
 
   posts.forEach(function(post){
     const storedTitle = _.lowerCase(post.title);
