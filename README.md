@@ -14,6 +14,7 @@ Tools and technologies that you learnt and used in the project.
 
 
 
+
 💻 Setup:
 
 1. Clone this github repository into your local device.
@@ -31,3 +32,7 @@ Tools and technologies that you learnt and used in the project.
 7. Start the server by typing nodemon app.js
 
 8. Open http://localhost:3000/ in your browser
+
+
+
+
