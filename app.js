@@ -70,17 +70,13 @@ app.post("/compose", function(req, res){
 
 app.get("/posts/:postId", function(req, res){
   const requestedId = req.params.postId;
-  Post.findOne({_id:requestedId},function)
+  Post.findOne({_id:requestedId},function(err,post)
+  {
+    res.render("post",{
+      title:post.title,
+      content:post.content,
+    })
 
-  posts.forEach(function(post){
-    const storedTitle = _.lowerCase(post.title);
-
-    if (storedTitle === requestedTitle) {
-      res.render("post", {
-        title: post.title,
-        content: post.content
-      });
-    }
   });
 
 });
